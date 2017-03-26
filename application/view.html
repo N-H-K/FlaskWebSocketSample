@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0,user-scalable=yes">
+  <title>Pitagraswitch Web Debug Sample</title>
+</head>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
+<script >
+ var socket = io.connect('ws://' + document.domain + ':' + location.port + '/main');
+ $(document).ready(() => {
+     $('#StartButton').on('click', start);
+ });
+ socket.on('connec', () => {
+     console.log('connect');
+ });
+ socket.on('pitagraswitch', (message) => {
+     console.log(message);
+ });
+
+ var start = function() {
+     $.ajax({
+         url: "/api/v1/start",
+         success: (data) => {
+             console.log(data);
+         }, error: (req, err, ex) => {
+             console.log(err);
+         }
+     });
+ }
+
+</script>
+<body style="padding: 20px;">
+    <button id="StartButton"  value="start">start</button>
+</body>
+</html>
